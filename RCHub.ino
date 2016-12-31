@@ -18,8 +18,8 @@ int status = WL_IDLE_STATUS;
 HomeEasy homeEasy;
 
 // WiFi parameters
-const char* ssid = "";
-const char* pass = "";
+const char* ssid = "K16";
+const char* pass = "jingijamborii";
 
 // Default NEXA remote ID
 unsigned long remoteId = 22611714;
