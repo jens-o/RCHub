@@ -9,6 +9,8 @@
 #include <SoftwareSerial.h>
 #include "HomeEasy.h"
 
+#include "wifiparams.h"
+
 // Create Serial for the WiFi card
 SoftwareSerial Serial1(6, 7);
 
@@ -16,10 +18,6 @@ int status = WL_IDLE_STATUS;
 
 // Create an HomeEasy instance
 HomeEasy homeEasy;
-
-// WiFi parameters
-const char* ssid = "K16";
-const char* pass = "jingijamborii";
 
 // Default NEXA remote ID
 unsigned long remoteId = 22611714;
