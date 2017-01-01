@@ -19,6 +19,8 @@ int status = WL_IDLE_STATUS;
 // Create an HomeEasy instance
 HomeEasy homeEasy;
 
+int nbrCalls = 3;
+
 // Default NEXA remote ID
 unsigned long remoteId = 22611714;
 
@@ -72,14 +74,18 @@ void loop() {
   WiFiEspClient client = server.available();
 
   if (client) {
-    if (client.connected()) {
+    while (client.connected()) {
       if (client.available()) {
         process(client);
       }
   
-      delay(10);
+      delay(1);
   
       client.stop();
+
+      while(client.status() != 0) {
+        delay(5);
+      }
     }
   }
 }
@@ -105,7 +111,6 @@ void process(WiFiEspClient client) {
     client.print(
             "HTTP/1.1 400 Bad Request\r\n"
             "Content-Type: text/html\r\n"
-            "Connection: close\r\n"
             "\r\n");
     return;
   }
@@ -113,7 +118,6 @@ void process(WiFiEspClient client) {
   client.print(
             "HTTP/1.1 200 OK\r\n"
             "Content-Type: text/html\r\n"
-            "Connection: close\r\n"
             "\r\n");
 }
 
@@ -122,6 +126,8 @@ int switchOnOff(bool on, WiFiEspClient client) {
 
   // Get first param
   unsigned int device = client.parseInt();
+
+  client.flush();
   
   bool group = false;
 
@@ -129,9 +135,10 @@ int switchOnOff(bool on, WiFiEspClient client) {
   Serial.print(device);
   Serial.print(":");
   Serial.println(on);
-  
-  homeEasy.sendAdvancedProtocolMessage(remoteId, device, on, group);
-  //homeEasy.sendAdvancedProtocolMessage(remoteId, 1, on, group);
+
+  for(int i=0; i < nbrCalls; i++) {
+    homeEasy.sendAdvancedProtocolMessage(remoteId, device, on, group);
+  }
 }
 
 /**
