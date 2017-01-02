@@ -21,9 +21,6 @@ HomeEasy homeEasy;
 
 int nbrCalls = 3;
 
-// Default NEXA remote ID
-unsigned long defaultRemoteId = 11111111; //22611714;
-
 // The port to listen for incoming TCP connections
 #define LISTEN_PORT           80
 
@@ -128,10 +125,6 @@ int switchOnOff(bool on, WiFiEspClient client) {
   unsigned int device = client.parseInt();
 
   unsigned long remoteId = (unsigned long)client.parseInt();
-  
-  if (remoteId < 10000000) {
-    remoteId = defaultRemoteId;
-  }
 
   client.flush();
   
