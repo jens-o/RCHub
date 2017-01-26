@@ -36,7 +36,7 @@ void setup(void)
 
   // Initate HomeEasy
   homeEasy = HomeEasy();
-  
+
   homeEasy.registerSimpleProtocolHandler(printSimpleResult);
   homeEasy.registerAdvancedProtocolHandler(printAdvancedResult);
   
@@ -119,7 +119,7 @@ void process(WiFiEspClient client) {
 }
 
 // Custom function accessible by the API
-int switchOnOff(bool on, WiFiEspClient client) {
+void switchOnOff(bool on, WiFiEspClient client) {
 
   // Get first param
   unsigned int device = client.parseInt();
